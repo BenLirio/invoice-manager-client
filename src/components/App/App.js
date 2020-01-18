@@ -8,6 +8,8 @@ import SignUp from '../SignUp/SignUp'
 import SignIn from '../SignIn/SignIn'
 import SignOut from '../SignOut/SignOut'
 import ChangePassword from '../ChangePassword/ChangePassword'
+import Invoices from '../Invoices/Invoices'
+import CreateInvoice from '../Invoices/CreateInvoice'
 
 class App extends Component {
   constructor () {
@@ -19,7 +21,9 @@ class App extends Component {
     }
   }
 
-  setUser = user => this.setState({ user })
+  setUser = user => {
+    this.setState({ user })
+  }
 
   clearUser = () => this.setState({ user: null })
 
@@ -53,6 +57,12 @@ class App extends Component {
           )} />
           <AuthenticatedRoute user={user} path='/change-password' render={() => (
             <ChangePassword alert={this.alert} user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/invoices' render={() => (
+            <Invoices user={user} />
+          )} />
+          <AuthenticatedRoute user={user} path='/create-invoice' render={() => (
+            <CreateInvoice user={user} alert={this.alert} />
           )} />
         </main>
       </Fragment>
