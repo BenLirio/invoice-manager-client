@@ -10,11 +10,7 @@ import Button from 'react-bootstrap/Button'
 class CreateInvoice extends Component {
   constructor () {
     super()
-
-    this.state = {
-      title: '',
-      description: ''
-    }
+    this.state = CreateInvoice._defaultState
   }
 
   handleChange = event => this.setState({
@@ -33,11 +29,11 @@ class CreateInvoice extends Component {
         variant: 'success'
       }))
       .then(() => {
-        this.setState({ title: '', description: '' })
+        this.setState(CreateInvoice._defaultState)
       })
       .catch(error => {
         console.error(error)
-        this.setState({ title: '', description: '' })
+        this.setState(CreateInvoice._defaultState)
         alert({
           heading: 'Some sort of error, sorry',
           message: messages.createInvoiceFailure,
@@ -47,15 +43,15 @@ class CreateInvoice extends Component {
   }
 
   render () {
-    const { title, description } = this.state
+    const { title, customer, notes, dueDate, total } = this.state
 
     return (
       <div className="row">
         <div className="col-sm-10 col-md-8 mx-auto mt-5">
-          <h3>Sign In</h3>
+          <h3>Create an Invoice</h3>
           <Form onSubmit={this.onCreateInvoice}>
             <Form.Group controlId="title">
-              <Form.Label>Email address</Form.Label>
+              <Form.Label>Title</Form.Label>
               <Form.Control
                 required
                 type="title"
@@ -65,14 +61,41 @@ class CreateInvoice extends Component {
                 onChange={this.handleChange}
               />
             </Form.Group>
-            <Form.Group controlId="description">
-              <Form.Label>Password</Form.Label>
+            <Form.Group controlId="customer">
+              <Form.Label>Customer</Form.Label>
               <Form.Control
                 required
-                name="description"
-                value={description}
-                type="description"
-                placeholder="Description"
+                type="customer"
+                name="customer"
+                value={customer}
+                placeholder="Enter customer"
+                onChange={this.handleChange}
+              />
+            </Form.Group>
+            <Form.Group controlId="description">
+              <Form.Label>Details</Form.Label>
+              <Form.Control
+                required
+                name="notes"
+                value={notes}
+                type="notes"
+                placeholder="Notes"
+                onChange={this.handleChange}
+              />
+              <Form.Control
+                required
+                name="total"
+                value={total}
+                type="total"
+                placeholder="Total"
+                onChange={this.handleChange}
+              />
+              <Form.Control
+                required
+                name="dueDate"
+                value={dueDate}
+                type="dueDate"
+                placeholder="dueDate"
                 onChange={this.handleChange}
               />
             </Form.Group>
@@ -88,5 +111,11 @@ class CreateInvoice extends Component {
     )
   }
 }
-
+CreateInvoice._defaultState = {
+  title: 'title',
+  customer: 'customer',
+  notes: 'notes',
+  dueDate: '12-12-12',
+  total: '55'
+}
 export default withRouter(CreateInvoice)

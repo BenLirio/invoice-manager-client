@@ -1,40 +1,48 @@
 import React, { Fragment } from 'react'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
+import { Dropdown } from 'react-bootstrap'
 
-const authenticatedOptions = (
+const authenticatedOptions = user => (
   <Fragment>
     <Nav.Link href="#create-invoice">Create Invoice</Nav.Link>
     <Nav.Link href="#invoices">Invoices</Nav.Link>
-    <Nav.Link href="#change-password">Change Password</Nav.Link>
-    <Nav.Link href="#sign-out">Sign Out</Nav.Link>
+    <Dropdown>
+      <Dropdown.Toggle variant="info" id="dropdown-basic">
+      Account
+      </Dropdown.Toggle>
+      <Dropdown.Menu alignRight>
+        <Dropdown.Item disabled>{user && user.email}</Dropdown.Item>
+        <Dropdown.Divider></Dropdown.Divider>
+        <Dropdown.Item eventKey="1" href="#change-password">Change Password</Dropdown.Item>
+        <Dropdown.Item eventKey="2" href="#sign-out">Logout</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   </Fragment>
 )
 
 const unauthenticatedOptions = (
   <Fragment>
-    <Nav.Link href="#sign-up">Sign Up</Nav.Link>
-    <Nav.Link href="#sign-in">Sign In</Nav.Link>
+    <Nav.Link href="#sign-up">Create Accout</Nav.Link>
+    <Nav.Link href="#sign-in">Login</Nav.Link>
   </Fragment>
 )
 
 const alwaysOptions = (
   <Fragment>
-    <Nav.Link href="#/">Home</Nav.Link>
   </Fragment>
 )
 
 const Header = ({ user }) => (
   <Navbar bg="dark" variant="dark" expand="md">
     <Navbar.Brand href="#">
-      react-auth-template
+      Invoice Management
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="ml-auto">
-        { user && <span className="navbar-text mr-2">Welcome, {user.email}</span>}
         { alwaysOptions }
-        { user ? authenticatedOptions : unauthenticatedOptions }
+        { user ? authenticatedOptions(user) : unauthenticatedOptions }
       </Nav>
     </Navbar.Collapse>
   </Navbar>
